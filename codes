@@ -1,0 +1,62 @@
+Form on Cloudpage: Create Company forms Build for small and large company > 500 
+<form action="%%=RequestParameter('PAGEURL')=%%" method="post">
+         <input type="text" name="firstname"placeholder="First Name"> <br>
+         <input type="text" name="lastname"placeholder="Last Name"> <br>
+         <input type="text" name="company"placeholder="Company"> <br>
+         <input type="text" name="email"placeholder="Email"> <br>
+         <input name="submitted" type="hidden" value="true" />
+         <button type="submit" value="Submit">Submit</button>
+      </form>
+
+Function Input (Collections) - Note(Create Small and Large Pages)
+<script runat="server">
+  Platform.Load("core","1.1.1");
+  var formField = Platform.Request.GetFormField('submitted');
+  var Firstname = Platform.Request.GetFormField('firstname');
+  var Lastname = Platform.Request.GetFormField('lastname');
+  var Email = Platform.Request.GetFormField('Email');
+  var Companysize = Platform.Request.GetFormField('company');
+  var Step = "1";
+  var formDE = DataExtension.Init("Form_Data");
+formDE.Rows.Add({Firstname:Firstname,Lastname:Lastname,Email:Email,Companysize:Companysize,Step:Step});
+  if(formField == "true") {
+  if(Companysize > 500) {
+   Platform.Response.Redirect("https://mcj6f75tfbrhpcl2vw02ptm-bbfm.pub.sfmc-content.com/ne1asce5h3h");
+  }
+    else {
+    Platform.Response.Redirect("https://mcj6f75tfbrhpcl2vw02ptm-bbfm.pub.sfmc-content.com/umgxlfs5vd2");
+    }
+  }
+  
+  
+ 
+Platform.Variable.SetValue("@debug",formField);
+</script>
+<p style="border:1px solid red;padding:0.5rem;">
+  DEBUG:
+  <br>
+  %%=v(@debug)=%%
+  <!--<ctrl:var name="listNames" />-->
+</p>
+<p style="border:1px solid red;padding:0.5rem;">
+  ERROR:
+  <br>
+  %%=v(@error)=%%
+</p>
+          
+
+Redirect Function if company is small or large. 
+if(formField == "true") {
+  formDE.Rows.Add({Firstname:Firstname,Lastname:Lastname,Email:Email,Companysize:Companysize,Step:Step});
+   
+   if( Companysize <500)
+   {
+     redirectURL="https://mcj6f75tfbrhpcl2vw02ptm-bbfm.pub.sfmc-content.com/umgxlfs5vd2";
+   }
+   else if(Companysize >=500)
+   {
+     redirectURL="https://mcj6f75tfbrhpcl2vw02ptm-bbfm.pub.sfmc-content.com/ne1asce5h3h";
+   }
+ try{ Redirect(redirectURL,true);}
+ catch(err){ Platform.Variable.SetValue("@debug",Stringify(err));}
+  }
